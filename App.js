@@ -1,11 +1,10 @@
-import React, { Component } from 'react';
-import ToggleButton from '@Components/ToggleButton'
+import Weather from '@Components/Weather/weather'
 
 import { createStackNavigator , createAppContainer } from 'react-navigation';
 
 const App = createStackNavigator(
   {
-    main : {screen : ToggleButton},
+    main : {screen : Weather},
   }
 );
 

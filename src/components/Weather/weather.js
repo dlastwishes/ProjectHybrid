@@ -1,5 +1,11 @@
 import React, { Component } from "react";
-import { View, StyleSheet, Text, TextInput } from "react-native";
+import {
+  ImageBackground,
+  View,
+  StyleSheet,
+  Text,
+  TextInput
+} from "react-native";
 import OpenWeatherMap from "./open_weather_map";
 
 export default class Weather extends Component {
@@ -28,28 +34,36 @@ export default class Weather extends Component {
 
   render() {
     return (
-        <View style={styles.container}> 
-         <Text style={styles.welcome}> You input {this.state.zip}</Text>
-        <TextInput
-          style={styles.input}
-          onSubmitEditing={this._handleTextChange}
-        />
-        <Text>
-          {this.state.forecast
-            ? this.state.forecast.main + "(" + this.state.forecast.temp + "°F)"
-            : "No information"}
-        </Text>
+      <ImageBackground
+        style={styles.backgroundImage}
+        source={require("@Images/flowers.png")}>
+        <View style={styles.container}>
+          <Text style={styles.welcome}> You input {this.state.zip}</Text>
+          <TextInput
+            style={styles.input}
+            onSubmitEditing={this._handleTextChange}
+          />
+          <Text>
+            {this.state.forecast
+              ? this.state.forecast.main +
+                "(" +
+                this.state.forecast.temp +
+                "°F)"
+              : "No information"}
+          </Text>
         </View>
+      </ImageBackground>
     );
   }
 }
 
 const styles = StyleSheet.create({
-    container: {
-        flex : 1,
-        justifyContent : 'center',
-        marginTop: 50,
-        alignItems: 'center', },
+  container: {
+    flex: 1,
+    justifyContent: "center",
+    marginTop: 50,
+    alignItems: "center"
+  },
   welcome: { fontSize: 20, textAlign: "center", margin: 10 },
   input: {
     fontSize: 20,
@@ -57,6 +71,6 @@ const styles = StyleSheet.create({
     padding: 2,
     height: 40,
     width: 100,
-    textAlign : 'center',
+    textAlign: "center"
   }
 });

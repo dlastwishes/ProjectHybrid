@@ -2,10 +2,12 @@ import React, { Component } from "react";
 import {
 FlatList,
 Image,
+Linking,
+Alert,
   View,
   Text,
   StyleSheet,
-  TouchableHighlight
+  TouchableOpacity
 } from "react-native";
 
 import contactData from "./ContactData";
@@ -23,25 +25,39 @@ export default class ContactItem extends Component {
     };
   }
 
+  onPressPhone = (tel) => {
+    Linking.openURL('tel:'+tel);
+  }
+
+  onPressPhoto = (name) => {
+    Alert.alert('Hello '+name)
+  }
+
   renderItem = ({item}) => { 
     let imgsrc = item.firstname.toLowerCase()+'.jpeg'
     let imgurl = contactData.getUrl()+"/contacts/img/"+imgsrc
     return (
-      <View style={{flexDirection:"row"}}> 
-
-       <Image
-      style={{width: 70, height: 70 , borderRadius: 50}}
+      <View style={{flexDirection:"row"}} > 
+      <TouchableOpacity onPress={() => {this.onPressPhoto(item.firstname)}}>
+      <Image
+      style={{width: 100, height: 100 , borderRadius: 50}}
         source={{uri: imgurl}}
       />
+      </TouchableOpacity>
+    
   
       <View style={{flexDirection:"column"}}>
       <Text> {item.prefix} {item.firstname} {item.lastname}</Text> 
        <Text> Tel : {item.phone}</Text>
        <Text> Email : {item.email}</Text>
+
+       <TouchableOpacity onPress={ () => { this.onPressPhone(item.phone)}}> 
+       <Image style={{width:40 , height:40 , borderRadius : 20}} 
+         source={require('@Images/phone.jpg')}
+       />
+       </TouchableOpacity>
       </View>
   
-     
-      
       </View>
    
     )

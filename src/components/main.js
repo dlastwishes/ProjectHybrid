@@ -5,8 +5,6 @@ import {
   StyleSheet
 } from "react-native";
 
-console.disableYellowBox
-
 import Contact from "@Components/ContactItem/ContactItem";
 
 export default class ContactItem extends Component {
@@ -25,7 +23,7 @@ export default class ContactItem extends Component {
   render() {
     return (
       <View style={styles.container}>
-     <Contact />
+     <Contact/>
     </View>
     )
   }

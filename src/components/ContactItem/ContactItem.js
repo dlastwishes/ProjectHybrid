@@ -64,7 +64,6 @@ export default class ContactItem extends Component {
     }
 
   componentDidMount() {
-
     contactData.fetchContacts().then(response => response.json())
     .then((data) => {
       this.setState({ data: data.contacts })

@@ -1,11 +1,17 @@
-getUrl = () => "https://web.sit.kmutt.ac.th/sanit/int493/";
+function getUrl () { return "https://web.sit.kmutt.ac.th/sanit/int493/" }
 
-getImageUrl = () => getUrl()+"products/images/"
+function getImageUrl () { return getUrl()+"products/images/"}
 
-fetchProducts = () => {
-    return fetch(getUrl()+"/products.php").then((res) => res.json).then((response) => {
-        return response.products
-    })
+function fetchProducts(){
+    return  fetch(getUrl()+'products.php')
+          .then(response => response.json())
+          .then(responseJson => {
+              
+              console.log(responseJson.products)
+              return responseJson.products
+            })
+          .catch((error)=> {console.log(error)})
 }
+
 
 export default {getUrl , getImageUrl , fetchProducts}

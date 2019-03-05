@@ -9,7 +9,7 @@ Alert,
   StyleSheet,
   TouchableOpacity
 } from "react-native";
-
+import ProductData from './ProductData'
 
 export default class ProductItems extends Component {
 
@@ -25,11 +25,19 @@ export default class ProductItems extends Component {
   }
 
   render() {
+      let {productname , productscale , productcode} = this.props.product
+      const imgUrl = ProductData.getImageUrl()
    return (
     <View style={{flexDirection:"row"}}>
-    
-        <View style={{flexDirection:"column"}}>
+        <View style={{flexDirection: "column"}}>
+        <Image style={styles.picture} source={require('@Images/icon/trains.png')} />
+            <Text style={styles.prodcode}> {productcode} </Text>
+        </View>
 
+        <View style={{flexDirection:"column"}}>
+        <Text style={styles.textcontainer}> {productname} </Text>
+        <Text style={styles.label}> {productscale} </Text>
+        
         </View>
     </View>
    )
@@ -37,7 +45,7 @@ export default class ProductItems extends Component {
   }
 }
 
-style = StyleSheet.create( {
+styles = StyleSheet.create( {
     container: {
         flexDirection: 'row',
         alignItems: 'center',

@@ -1,15 +1,45 @@
-import Weather from '@Components/Weather/weather'
-import mainContract from '@Components/ContactItem/main'
-import Contract from '@Components/ContactItem/ContactItem'
-import main from '@Components/main'
+import React , {Component } from "react";
+import { StyleSheet, Text, View, FlatList } from "react-native";
+import ContactData from "./ContactData" ;
+import ContactItem from './ContactItem' ;
 
-import { createStackNavigator , createAppContainer } from 'react-navigation';
-
-const App = createStackNavigator(
-  {
-    main : {screen : main},
-    weather : {screen : Weather},
+export default class App extends Component {
+  constructor(props) {
+    super(props)
+  
+    this.state = {
+       data : []
+    };
+  };
+  
+  componentDidMount(){
+    ContactData.fetchContacts().then((contacts)=>{
+      this.setState({data : contacts}) ;
+    }) ;
   }
-);
 
-export default createAppContainer(App);
+  _renderItem = ({item}) => {
+    return (<ContactItem contact = {item}/>)
+  }
+
+  keyExtractor = ({email}) => email ;
+
+
+  render() {
+    return (    <View style={styles.container}>
+      <FlatList 
+          data = {this.state.data}
+          renderItem = {this._renderItem}
+          keyExtractor = {this.keyExtractor} 
+      />
+    </View>
+    )
+
+  }
+}
+const styles = StyleSheet.create({
+  container: {
+    flex: 1,
+    paddingTop: 20
+  }
+});

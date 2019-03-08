@@ -19,7 +19,9 @@ export default class SearchBar extends Component {
      
    return (
     <View style={{flexDirection:"row"}}>
-        <TextInput onChangeText={this.props.onChangeText}
+        <TextInput style={{ 
+            borderColor: '#7a42f4',borderWidth: 1,
+            alignItems : 'stretch' , height : 20 , fontSize : 16}} onChangeText={this.props.onChangeText}
         onSubmitEditing={this.props.onSubmitEditing}
             style={{height:50}}
             keyboardAppearance='light'

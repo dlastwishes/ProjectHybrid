@@ -27,8 +27,8 @@ export default class ParksDetail extends Component {
         <Image source={{uri : imgUrl}} style={{width : 500 , height: 100}}/>
         <Text style={{}}> {name} {"\n"} </Text>
         <Text style={{fontWeight:'500'}}> Park Detail </Text> 
-        <Text>{description}</Text>
-        <Text> State : {state} {"\n"}{"\n"} Distance : {distance} {"\n"}{"\n"} Location(lat,lon) : {lat} , {lon} </Text>
+        <Text>{description} {"\n"}</Text>
+        <Text> State : {state} {"\n"}{"\n"} Distance : {distance} {"\n"}{"\n"} Location(lat,lon) : {lat} , {lon} {"\n"} </Text>
     </ScrollView>
    )
    

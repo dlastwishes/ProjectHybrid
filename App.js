@@ -14,6 +14,7 @@ import ParksData from "./ParksData";
 import SearchBar from "./SearchBar";
 
 export default class App extends Component {
+
   constructor(props) {
     super(props);
     this.state = {
@@ -27,7 +28,7 @@ export default class App extends Component {
 
   componentDidMount() {
     ParksData.getParksData().then(parks => {
-      this.setState({ data: parks , park : parks[0]});
+      this.setState({data: parks , park : parks[0] });
     });
   }
 
@@ -49,13 +50,20 @@ export default class App extends Component {
 
   _onSubmitEditing() {
     if(this.state.keySearch.length > 0){
-      this.setState({isFilter : true})
       let parksData = this.state.data
-      const res = parksData.filter(item => item.name.toLowerCase().indexOf(this.state.keySearch) >= 0 );
-      this.setState({filterData : res})
+      const res = parksData.filter(item => 
+        (item.name.toLowerCase().indexOf(this.state.keySearch) >= 0 
+        || item.state.toLowerCase().indexOf(this.state.keySearch) >= 0 ));
+        if(res.length == 0){
+          Alert.alert('Not Found')
+        }
+        else{
+          this.setState({isFilter : true, filterData : res})
+        }
+    
     }
     else{
-      Alert.alert('Incorrect input')
+     this.setState({isFilter : false})
     }
   }
 
@@ -72,14 +80,16 @@ export default class App extends Component {
   }
 
   render() {
+    
     return (
       <ScrollView style={{ flexDirection: "column" }}>
-        <Text style={{ alignSelf: "center" , height : 30 ,fontSize: 20}}> National Parks</Text>
+        <Text style={styles.title}> National Parks</Text>
         <SearchBar 
         onSubmitEditing={() => this._onSubmitEditing()}
         onChangeText={(text) => {this._onChange(text)}}
         />
         <FlatList
+        style={styles.containerImage}
           horizontal={true}
           data={(this.state.isFilter) ? this.state.filterData : this.state.data}
           renderItem={this._renderParks}
@@ -88,4 +98,38 @@ export default class App extends Component {
       </ScrollView>
     );
   }
+
 }
+
+const styles = StyleSheet.create({
+    container : {
+      flex : 1, 
+      backgroundColor :'#fff',
+      justifyContent : 'flex-start',
+      marginTop : 20,
+    },
+    containertitle:{
+      alignItems : 'center',
+      height : 30
+    },
+    containerImage : {
+      padding : 2
+    },
+    containerList : {
+      height : 180,
+      margin : 2
+    },
+    title : {
+      fontSize : 16,
+      fontWeight :'bold',
+      alignSelf : 'center'
+    },
+    image : {
+      width: 150,
+      height : 150
+    },
+    label : {
+      fontSize : 10,
+      textAlign : 'center'
+    }
+})

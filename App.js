@@ -1,50 +1,91 @@
-/**
- * Sample React Native App
- * https://github.com/facebook/react-native
- *
- * @format
- * @flow
- * @lint-ignore-every XPLATJSCOPYRIGHT1
- */
+import React, { Component } from "react";
+import {
+  Image,
+  FlatList,
+  StyleSheet,
+  Alert,
+  TouchableOpacity,
+  View,
+  Text,
+  ScrollView
+} from "react-native";
+import ParksDetail from "./ParksDetail";
+import ParksData from "./ParksData";
+import SearchBar from "./SearchBar";
 
-import React, {Component} from 'react';
-import {Platform, StyleSheet, Text, View} from 'react-native';
+export default class App extends Component {
+  constructor(props) {
+    super(props);
+    this.state = {
+      data: [],
+      filterData: [],
+      park: [],
+      isFilter: false,
+      keySearch : '',
+    };
+  }
 
-const instructions = Platform.select({
-  ios: 'Press Cmd+R to reload,\n' + 'Cmd+D or shake for dev menu',
-  android:
-    'Double tap R on your keyboard to reload,\n' +
-    'Shake or press menu button for dev menu',
-});
+  componentDidMount() {
+    ParksData.getParksData().then(parks => {
+      this.setState({ data: parks , park : parks[0]});
+    });
+  }
 
-type Props = {};
-export default class App extends Component<Props> {
+  _renderParkDetail = ({item}) => {
+    return <ParksDetail parks={item} />;
+  };
+
+  _renderParks = ({ item }) => {
+    let img = ParksData.getParksImageThumbUrl() + item.image;
+    return (
+      <View style={{ alignItems: "center" }}>
+        <TouchableOpacity onPress={() => {this._onPress(item.id)}}>
+          <Image style={{ width: 150, height: 150 }} source={{ uri: img }} />
+          <Text> {item.name} </Text>
+        </TouchableOpacity>
+      </View>
+    );
+  };
+
+  _onSubmitEditing() {
+    if(this.state.keySearch.length > 0){
+      this.setState({isFilter : true})
+      let parksData = this.state.data
+      const res = parksData.filter(item => item.name.toLowerCase().indexOf(this.state.keySearch) >= 0 );
+      this.setState({filterData : res})
+    }
+    else{
+      Alert.alert('Incorrect input')
+    }
+  }
+
+  _onChange(text) {
+    this.setState({keySearch : text})
+  }
+
+  _onPress(id) {
+    var parkDetail = this.state.isFilter
+      ? this.state.filterData
+      : this.state.data;
+    const res = parkDetail.filter(park => park.id == id.toString());
+    this.setState({ park : res });
+  }
+
   render() {
     return (
-      <View style={styles.container}>
-        <Text style={styles.welcome}>Welcome to React Native!</Text>
-        <Text style={styles.instructions}>To get started, edit App.js</Text>
-        <Text style={styles.instructions}>{instructions}</Text>
-      </View>
+      <ScrollView style={{ flexDirection: "column" }}>
+        <Text style={{ alignSelf: "center" , height : 30 ,fontSize: 20}}> National Parks</Text>
+        <SearchBar 
+        onSubmitEditing={() => this._onSubmitEditing()}
+        onChangeText={(text) => {this._onChange(text)}}
+        />
+        <FlatList
+          horizontal={true}
+          data={(this.state.isFilter) ? this.state.filterData : this.state.data}
+          renderItem={this._renderParks}
+        />
+        <FlatList data={this.state.park} renderItem={this._renderParkDetail} />  
+      </ScrollView>
     );
   }
 }
-
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    justifyContent: 'center',
-    alignItems: 'center',
-    backgroundColor: '#F5FCFF',
-  },
-  welcome: {
-    fontSize: 20,
-    textAlign: 'center',
-    margin: 10,
-  },
-  instructions: {
-    textAlign: 'center',
-    color: '#333333',
-    marginBottom: 5,
-  },
-});

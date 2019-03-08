@@ -28,8 +28,10 @@ export default class App extends Component {
 
   componentDidMount() {
     ParksData.getParksData().then(parks => {
-      this.setState({data: parks , park : parks[0] });
-    });
+      this.setState({data: parks });
+    }).then(() => {
+      this.setState({park : this.state.data[0]})
+    })
   }
 
   _renderParkDetail = ({item}) => {
@@ -41,8 +43,8 @@ export default class App extends Component {
     return (
       <View style={{ alignItems: "center" }}>
         <TouchableOpacity onPress={() => {this._onPress(item.id)}}>
-          <Image style={{ width: 150, height: 150 }} source={{ uri: img }} />
-          <Text> {item.name} </Text>
+          <Image style={styles.image} source={{ uri: img }} />
+          <Text style={styles.label}> {item.name} </Text>
         </TouchableOpacity>
       </View>
     );

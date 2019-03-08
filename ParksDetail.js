@@ -25,10 +25,15 @@ export default class ParksDetail extends Component {
     <ScrollView style={{flexDirection:"column"}}>
         <Text> {"\n"}</Text>
         <Image source={{uri : imgUrl}} style={{width : 500 , height: 100}}/>
-        <Text style={{}}> {name} {"\n"} </Text>
-        <Text style={{fontWeight:'500'}}> Park Detail </Text> 
-        <Text>{description} {"\n"}</Text>
-        <Text> State : {state} {"\n"}{"\n"} Distance : {distance} {"\n"}{"\n"} Location(lat,lon) : {lat} , {lon} {"\n"} </Text>
+        <Text style={{margin:10,fontSize:18,fontWeight:'bold',textAlign:'center'}}> {name} </Text>
+        <Text style={{fontWeight:'bold' , color:'blue'}}> Park Detail </Text> 
+        <Text>{description} </Text>
+        <Text  style={{color:'blue'}}> State : </Text> 
+        <Text> {state} </Text>
+        <Text style={{color:'blue'}}> Distance : </Text> 
+        <Text>{distance}</Text>
+        <Text style={{color:'blue'}}> Location(lat,lon) : </Text>
+        <Text> {lat} , {lon} {"\n"} </Text>
     </ScrollView>
    )
    

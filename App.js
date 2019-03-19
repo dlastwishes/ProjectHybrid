@@ -14,7 +14,6 @@ import ParksData from "./ParksData";
 import SearchBar from "./SearchBar";
 
 export default class App extends Component {
-
   constructor(props) {
     super(props);
     this.state = {
@@ -22,27 +21,33 @@ export default class App extends Component {
       filterData: [],
       park: [],
       isFilter: false,
-      keySearch : '',
+      keySearch: ""
     };
   }
 
   componentDidMount() {
-    ParksData.getParksData().then(parks => {
-      this.setState({data: parks });
-    }).then(() => {
-      this.setState({park : this.state.data[0]})
-    })
+    ParksData.getParksData()
+      .then(parks => {
+        this.setState({ data: parks });
+      })
+      .then(() => {
+        this.setState({ park: this.state.data[0] });
+      });
   }
 
-  _renderParkDetail = ({item}) => {
+  _renderParkDetail = ({ item }) => {
     return <ParksDetail parks={item} />;
   };
 
   _renderParks = ({ item }) => {
     let img = ParksData.getParksImageThumbUrl() + item.image;
     return (
-      <View style={{ alignItems: "center" }}>
-        <TouchableOpacity onPress={() => {this._onPress(item.id)}}>
+      <View>
+        <TouchableOpacity
+          onPress={() => {
+            this._onPress(item.id);
+          }}
+        >
           <Image style={styles.image} source={{ uri: img }} />
           <Text style={styles.label}> {item.name} </Text>
         </TouchableOpacity>
@@ -51,26 +56,25 @@ export default class App extends Component {
   };
 
   _onSubmitEditing() {
-    if(this.state.keySearch.length > 0){
-      let parksData = this.state.data
-      const res = parksData.filter(item => 
-        (item.name.toLowerCase().indexOf(this.state.keySearch) >= 0 
-        || item.state.toLowerCase().indexOf(this.state.keySearch) >= 0 ));
-        if(res.length == 0){
-          Alert.alert('Not Found')
-        }
-        else{
-          this.setState({isFilter : true, filterData : res})
-        }
-    
-    }
-    else{
-     this.setState({isFilter : false})
+    if (this.state.keySearch.length > 0) {
+      let parksData = this.state.data;
+      const res = parksData.filter(
+        item =>
+          item.name.toLowerCase().indexOf(this.state.keySearch) >= 0 ||
+          item.state.toLowerCase().indexOf(this.state.keySearch) >= 0
+      );
+      if (res.length == 0) {
+        Alert.alert("Not Found");
+      } else {
+        this.setState({ isFilter: true, filterData: res });
+      }
+    } else {
+      this.setState({ isFilter: false });
     }
   }
 
   _onChange(text) {
-    this.setState({keySearch : text})
+    this.setState({ keySearch: text });
   }
 
   _onPress(id) {
@@ -78,60 +82,66 @@ export default class App extends Component {
       ? this.state.filterData
       : this.state.data;
     const res = parkDetail.filter(park => park.id == id.toString());
-    this.setState({ park : res });
+    this.setState({ park: res[0] });
   }
 
   render() {
-    
     return (
-      <ScrollView style={{ flexDirection: "column" }}>
-        <Text style={styles.title}> National Parks</Text>
-        <SearchBar 
-        onSubmitEditing={() => this._onSubmitEditing()}
-        onChangeText={(text) => {this._onChange(text)}}
+      <View style={styles.container}>
+        <View style={styles.containerTitle}>
+          <Text style={styles.title}> National Parks</Text>
+        </View>
+
+        <SearchBar
+          onSubmitEditing={() => this._onSubmitEditing()}
+          onChangeText={text => {
+            this._onChange(text);
+          }}
         />
-        <FlatList
-        style={styles.containerImage}
-          horizontal={true}
-          data={(this.state.isFilter) ? this.state.filterData : this.state.data}
-          renderItem={this._renderParks}
-        />
-        <FlatList data={this.state.park} renderItem={this._renderParkDetail} />  
-      </ScrollView>
+        <View style={styles.containerList}>
+          <FlatList
+            style={styles.containerImage}
+            horizontal={true}
+            data={this.state.isFilter ? this.state.filterData : this.state.data}
+            renderItem={this._renderParks}
+          />
+        </View>
+        <ParksDetail parks={this.state.park} />
+      </View>
     );
   }
-
 }
 
 const styles = StyleSheet.create({
-    container : {
-      flex : 1, 
-      backgroundColor :'#fff',
-      justifyContent : 'flex-start',
-      marginTop : 20,
+  container: {
+    flex: 1,
+    backgroundColor: '#fff',
+    flexDirection: 'column',
+    justifyContent: 'flex-start',
+    marginTop: 20,
     },
-    containertitle:{
-      alignItems : 'center',
-      height : 30
+    containerTitle: {
+    alignItems:'center',
+    height:30
     },
-    containerImage : {
-      padding : 2
+    containerImage: {
+    padding:2
     },
-    containerList : {
-      height : 180,
-      margin : 2
+   
+   containerList: {
+    height:180,
+    margin: 2
     },
-    title : {
-      fontSize : 16,
-      fontWeight :'bold',
-      alignSelf : 'center'
+    title:{
+    fontSize:16,
+    fontWeight:'bold'
     },
-    image : {
-      width: 150,
-      height : 150
+    image: {
+    width: 150,
+    height: 150,
     },
-    label : {
-      fontSize : 10,
-      textAlign : 'center'
+    label: {
+    fontSize: 10,
+    textAlign: 'center',
     }
-})
+});

@@ -1,7 +1,8 @@
 import React, { Component } from "react";
 import {
 TextInput,
-View
+View,
+StyleSheet
 } from "react-native";
 
 export default class SearchBar extends Component {
@@ -18,20 +19,31 @@ export default class SearchBar extends Component {
   render() {
      
    return (
-    <View style={{flexDirection:"row"}}>
-        <TextInput style={{ 
-            borderColor: '#7a42f4',borderWidth: 1,
-            alignItems : 'stretch' , height : 20 , fontSize : 16}} onChangeText={this.props.onChangeText}
-        onSubmitEditing={this.props.onSubmitEditing}
-            style={{height:50}}
-            keyboardAppearance='light'
-             placeholder="Enter Park Name or State Name"   
-            />
+    <View style={styles.container}>
+        <TextInput style={styles.textinput} 
+        onChangeText={this.props.onChangeText}
+        onSubmitEditing={this.props.onSubmitEditing} />
     </View>
    )
    
   }
 }
+
+const styles = StyleSheet.create({
+  container: {
+    flexDirection: 'column',
+    justifyContent: "flex-start",
+    borderWidth: 5,
+    borderColor: 'gray',
+    padding: 5,
+    },
+
+    textinput: {
+    alignItems: 'stretch',
+    height: 20,
+    fontSize: 16,
+    }
+})
 
 console.disableYellowBox = true;
 

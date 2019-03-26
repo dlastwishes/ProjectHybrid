@@ -5,9 +5,9 @@ import {
   StyleSheet
 } from "react-native";
 
-import Contact from "@Components/ContactItem/ContactItem";
 
-export default class ContactItem extends Component {
+
+export default class ContractDetail extends Component {
 
   static navigationOptions = {
     header: null
@@ -21,10 +21,9 @@ export default class ContactItem extends Component {
   }
 
   render() {
-    const { navigation } = this.props;
     return (
       <View style={styles.container}>
-     <Contact navigation={navigation}/>
+     <Text> Hello World</Text>
     </View>
     )
   }

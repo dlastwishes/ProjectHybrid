@@ -1,9 +1,9 @@
 import React, { Component } from "react";
 import {
-FlatList,
-Image,
-Linking,
-Alert,
+  FlatList,
+  Image,
+  Linking,
+  Alert,
   View,
   Text,
   StyleSheet,
@@ -13,9 +13,8 @@ Alert,
 import contactData from "./ContactData";
 
 export default class ContactItem extends Component {
-
   static navigationOptions = {
-    header: null
+    title : 'Contact List'
   };
 
   constructor(props) {
@@ -25,64 +24,78 @@ export default class ContactItem extends Component {
     };
   }
 
-  onPressPhone = (tel) => {
-    Linking.openURL('tel:'+tel);
+  onPressPhone = tel => {
+    Linking.openURL("tel:" + tel);
+  };
+
+  navInfoPage = (prefix , firstname , lastname , email , phone) =>{
+    this.props.navigation.navigate('contractDetail' , { prefix : prefix , firstname : firstname 
+      , lastname : lastname , email : email , phone : phone} );
   }
 
-  onPressPhoto = (name) => {
-    Alert.alert('Hello '+name)
-  }
+  onPressPhoto = name => {};
 
-  renderItem = ({item}) => { 
-    let imgsrc = item.firstname.toLowerCase()+'.jpeg'
-    let imgurl = contactData.getUrl()+"/contacts/img/"+imgsrc
+  renderItem = ({ item }) => {
+    let imgsrc = item.firstname.toLowerCase() + ".jpeg";
+    let imgurl = contactData.getUrl() + "/contacts/img/" + imgsrc;
     return (
-      <View style={{flexDirection:"row"}} > 
-      <TouchableOpacity onPress={() => {this.onPressPhoto(item.firstname)}}>
-      <Image
-      style={{width: 100, height: 100 , borderRadius: 50}}
-        source={{uri: imgurl}}
-      />
-      </TouchableOpacity>
-    
-  
-      <View style={{flexDirection:"column"}}>
-      <Text> {item.prefix} {item.firstname} {item.lastname}</Text> 
-       <Text> Tel : {item.phone}</Text>
-       <Text> Email : {item.email}</Text>
+      <View style={{ flexDirection: "row" }}>
+        <TouchableOpacity
+          onPress={() => {
+            this.onPressPhoto(item.firstname);
+          }}
+        >
+          <Image
+            style={{ width: 60, height: 60 }}
+            source={{ uri: imgurl }}
+          />
+        </TouchableOpacity>
 
-       <TouchableOpacity onPress={ () => { this.onPressPhone(item.phone)}}> 
-       <Image style={{width:40 , height:40 , borderRadius : 20}} 
-         source={require('@Images/phone.jpg')}
-       />
-       </TouchableOpacity>
+        <TouchableOpacity onPress={() => { 
+          this.navInfoPage(item.prefix , item.firstname , item.lastname , item.email , item.phone )
+        }}>
+          <View style={{ flexDirection: "column" }}>
+            <Text>
+              {"\n"}
+              {item.prefix} {item.firstname} {item.lastname}
+            </Text>
+
+            {/* <TouchableOpacity
+              onPress={() => {
+                this.onPressPhone(item.phone);
+              }}
+            >
+              <Image
+                style={{ width: 40, height: 40, borderRadius: 20 }}
+                source={require("@Images/phone.jpg")}
+              />
+            </TouchableOpacity> */}
+          </View>
+        </TouchableOpacity>
       </View>
-  
-      </View>
-   
-    )
-    }
+    );
+  };
 
   componentDidMount() {
-    contactData.fetchContacts().then(response => response.json())
-    .then((data) => {
-      this.setState({ data: data.contacts })
-    }) 
-    .catch(error => {
-      console.error(error);
-    });
+    contactData
+      .fetchContacts()
+      .then(response => response.json())
+      .then(data => {
+        this.setState({ data: data.contacts });
+      })
+      .catch(error => {
+        console.error(error);
+      });
   }
 
   render() {
-   return (
-    <View style={styles.container}>
-    <FlatList
-      data={this.state.data}
-      renderItem={this.renderItem}
-    />
-  </View>
-   )
-   
+  
+    return (
+      <View style={styles.container}>
+    
+        <FlatList data={this.state.data} renderItem={this.renderItem} />
+      </View>
+    );
   }
 }
 
@@ -94,6 +107,3 @@ const styles = StyleSheet.create({
 });
 
 console.disableYellowBox = true;
-
-
-

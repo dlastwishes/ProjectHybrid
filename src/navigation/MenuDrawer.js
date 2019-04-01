@@ -1,15 +1,40 @@
-import React, { Component } from "react";
-import Settings from '@Views/Settings'
-import Home from '@Views/Home'
+import React, { Component } from 'react';
+import { createDrawerNavigator, createAppContainer, createStackNavigator} from 'react-navigation' ;
+import HomeScreen from '@Views/Home';
+import ReadMore from '@Views/ViewArticle'
+import Signout from '@Views/LoginView';
+import DrawerCustom from '@Widgets/DrawerCustom'
 
-import { createDrawerNavigator , createAppContainer } from 'react-navigation';
-
-  const DrawerNavigator = createDrawerNavigator({
-    Setting: {
-      screen: Settings,
-    },
-   
+ const DrawerNavigator = createDrawerNavigator(
+  {
+     Home: {
+         screen: HomeScreen
+     },
+     Signout: {
+         screen: Signout
+     }
   },
-  );
+  {
+    contentComponent: DrawerCustom,
+  drawerWidth: 300
+  }
+ ) ;
 
-  export default createAppContainer(DrawerNavigator);
+ const StackMedium = createStackNavigator(
+  {
+     main: {
+         screen: DrawerNavigator
+     },
+     readmore : {
+       screen : ReadMore
+     },
+  },{
+    headerMode: 'none',
+  }
+ ) ;
+
+
+
+const Drawer = createAppContainer(StackMedium) ;
+
+export default Drawer ;

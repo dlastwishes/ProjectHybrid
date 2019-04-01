@@ -1,9 +1,8 @@
 import React, { Component } from "react";
-import { ScrollView,View, TextInput, TouchableOpacity } from "react-native";
+import { Text,View, TextInput, TouchableOpacity } from "react-native";
 import Icon from "react-native-vector-icons/FontAwesome";
 
-
-export default class NotificationHeader extends Component {
+export default class SearchViewHeader extends Component {
   static navigationOptions = {
     header: null
   };
@@ -11,6 +10,7 @@ export default class NotificationHeader extends Component {
   constructor(props) {
     super(props);
     this.state = {
+
     }
 }
 
@@ -18,6 +18,8 @@ export default class NotificationHeader extends Component {
 
   render() {
     return (
+        <View style={{flexDirection:'column'}}> 
+
         <View style={{ flexDirection: "row", backgroundColor: "white"
         , height:50  }}>
 
@@ -32,11 +34,18 @@ export default class NotificationHeader extends Component {
             </TouchableOpacity>
           </View>
 
-          <View style={{ marginTop: 15 }}>
-            <TextInput/>
+          <View style={{}}>
+            <TextInput placeholder="Search Medium" style={{ fontSize:17,marginLeft:5,width:310, backgroundColor:'#ECEEEC'}}/>
           </View>
 
         </View>
+
+        <View style={{backgroundColor:'white'}}> 
+        <Text style={{fontSize:25 , marginTop:10 , fontWeight:'bold'}}> Explore topics</Text>
+        </View>
+
+        </View>
+        
     );
   }
 }

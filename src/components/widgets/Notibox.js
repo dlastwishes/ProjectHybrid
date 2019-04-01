@@ -43,14 +43,7 @@ export default class Notification extends Component {
         </View>
      </View>
 
-     <View style={{flex:1}}>
-     <Icon
-            style={{ marginLeft:3, padding: 10, marginTop: 5 }}
-            name="plus"
-            size={27}
-            color="#D7D2D1"
-          />
-     </View>
+    
 
      </View>
     );

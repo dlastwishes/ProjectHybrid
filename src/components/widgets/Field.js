@@ -16,12 +16,12 @@ export default class Notification extends Component {
 
   render() {
     let {
-        name
+        keyword
       } = this.props.keyword;
     return (
-     <View style={{flexDirection:'row'}}>
+     <View style={{flexDirection:'row' ,  backgroundColor:'white'}}>
         <View>
-            <Text> {name}</Text>
+            <Text style={{fontSize:20 , marginTop:12 , color:'#4BD86E'}}> {keyword}</Text>
         </View>
      </View>
     );

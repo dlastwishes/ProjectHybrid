@@ -1,5 +1,5 @@
 import React, { Component } from "react";
-import { View, Image, Text } from "react-native";
+import { TouchableOpacity , View, Image, Text } from "react-native";
 import Icon from "react-native-vector-icons/FontAwesome";
 
 export default class SubCardStory extends Component {
@@ -30,7 +30,8 @@ export default class SubCardStory extends Component {
           flexDirection: "column",
           borderWidth: 1,
           borderColor: "#F0EDEC",
-          backgroundColor: "white"
+          backgroundColor: "white",
+          padding : 5
         }}
       >
         <View
@@ -42,29 +43,34 @@ export default class SubCardStory extends Component {
         <View style={{ flex: 1 }}>
           <View style={{ flexDirection: "row" }}>
             <View style={{ flexDirection: "column", width: 250, height: 40 }}>
+            <TouchableOpacity onPress={this.props.onPressSubCard}> 
               <Text
                 style={{ textAlign: "left", fontWeight: "bold", fontSize: 22 }}
               >
                 {" "}
                 {title}{" "}
               </Text>
+              
               <Text style={{ textAlign: "left", fontSize: 20 }}>
                 {" "}
                 {description}{" "}
               </Text>
+              </TouchableOpacity>
             </View>
 
             <View style={{ justifyContent: "flex-start" }}>
+            <TouchableOpacity onPress={this.props.onPressSubCard}> 
               <Image
-                style={{ width: 100, height: 100, marginRight: 10 }}
+                style={{ width: 100, height: 100, marginRight: 20 }}
                 source={source}
               />
+              </TouchableOpacity>
             </View>
           </View>
         </View>
 
         <View style={{ flex: 2, flexDirection: "row" }}>
-          <View style={{ flexDirection: "column" }}>
+          <View style={{ flexDirection: "column" , marginTop:10}}>
             <Text> {author} </Text>
             <View style={{ flexDirection: "row" }}>
               <Text>
@@ -98,3 +104,6 @@ export default class SubCardStory extends Component {
     );
   }
 }
+
+console.disableYellowBox = true;
+

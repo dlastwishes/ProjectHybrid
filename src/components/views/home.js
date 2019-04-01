@@ -3,8 +3,10 @@ import {
   ScrollView,
   Text,
   FlatList,
+  Image,
   Alert,
   View,
+  RefreshControl,
   StyleSheet,
   TouchableOpacity
 } from "react-native";
@@ -13,19 +15,21 @@ import CardStory from "@Widgets/CardStory";
 import SubCardStory from "@Widgets/subStoryCard";
 import Modal from "react-native-modal";
 import Notification from "@Views/Notification";
-import MenuDrawer from "@Navigations/MenuDrawer";
 import SearchView from '@Views/SearchView'
+import SplashScreen from 'react-native-splash-screen';
 
 export default class Home extends Component {
   static navigationOptions = {
-    header: null
+
   };
+
 
   constructor(props) {
     super(props);
 
     this.state = {
       searchVisible: false,
+      refreshing: false,
       notificationVisible: false,
       topArticle: [
         {
@@ -34,84 +38,107 @@ export default class Home extends Component {
           createDate: "2 days ago",
           author: "DlastWishes",
           category: "Blockchain",
+          detail : 'this is detail for corda blockchain',
           timeRead: "7 min read",
-          source: require("@Images/story/corda2.png")
+          source: require("@Images/story/corda1.png")
         }
       ],
       articles: [
         {
-          title: "Introducing to Corda Blockchain",
-          description: "Art Makes You Smart",
-          createDate: "2 days ago",
-          author: "DlastWishes",
-          category: "Blockchain",
-          timeRead: "7 min read",
-          source: require("@Images/story/corda2.png")
+          "id" : 1,
+          "title": "Dagger 2 on Android: The Simple Way",
+          "description": "It’s complicated, but only ...",
+          "createDate": "Dec 15, 2018",
+          "author": "Fred Porciúncula",
+          "category": "Android",
+          "timeRead": "7 min read",
+          "source": require("@Images/story/dag1.jpeg")
         },
         {
-          title: "A",
-          description: "Art Makes You Smart",
-          createDate: "7 days ago",
-          author: "DlastWishes",
-          category: "Blockchain",
-          timeRead: "2 min read",
-          source: require("@Images/story/corda2.png")
+          "id" : 2,
+          "title": "Your First Truffle Dapp — What is the Blockchain",
+          "description": "",
+          "createDate": "Apr 2",
+          "author": "Hugh Knight",
+          "category": "Blockchain",
+          "timeRead": "8 min read",
+          "source": require("@Images/story/truffle.jpeg")
         },
         {
-          title: "B",
-          description: "Art Makes You Smart",
-          createDate: "10 days ago",
-          author: "DlastWishes",
-          category: "Blockchain",
-          timeRead: "10 min read",
-          source: require("@Images/story/corda2.png")
+          "id" : 3,
+          "title": "An introduction to scope in JavaScript",
+          "description": "",
+          "createDate": "Apr 2",
+          "author": "Cristian Salcescu",
+          "category": "Javascript",
+          "timeRead": "5 min read",
+          "source": require("@Images/story/javascript.jpeg")
         },
         {
-          title: "C",
-          description: "Art Makes You Smart",
-          createDate: "7 days ago",
-          author: "DlastWishes",
-          category: "Blockchain",
-          timeRead: "2 min read",
-          source: require("@Images/story/corda2.png")
+          "id" : 4,
+          "title": "Exploring RxJava in Android",
+          "description": "This article is part of RxJava ...",
+          "createDate": "Aug 19, 2018",
+          "author": "Anitaa Murthy",
+          "category": "Android",
+          "timeRead": "4 min read",
+          "source": require("@Images/story/android.jpeg")
         },
         {
-          title: "D",
-          description: "Art Makes You Smart",
-          createDate: "7 days ago",
-          author: "DlastWishes",
-          category: "Blockchain",
-          timeRead: "2 min read",
-          source: require("@Images/story/corda2.png")
+          "id" : 5,
+          "title": "What’s Your Personal MRR?",
+          "description": "MRR is top of mind for every...",
+          "createDate": "Mar 27",
+          "author": "Andrew Pierno",
+          "category": "Startup",
+          "timeRead": "3 min read",
+          "source": require("@Images/story/sugar.jpeg")
         },
         {
-          title: "E",
-          description: "Art Makes You Smart",
-          createDate: "7 days ago",
-          author: "DlastWishes",
-          category: "Blockchain",
-          timeRead: "2 min read",
-          source: require("@Images/story/corda2.png")
+          "id" : 6,
+          "title": "Starting Flows with trackBy",
+          "description": "My trend of looking at Corda...",
+          "createDate": "Oct 6, 2018",
+          "author": "Daniel Newton",
+          "category": "Corda Blockchain",
+          "timeRead": "5 min read",
+          "source": require("@Images/story/corda3.png")
         }
       ]
     };
   }
 
   componentDidMount() {
+    
+    SplashScreen.hide()
+  }
+
+  _onRefresh = () => {
+    this.setState({refreshing: true});
+    this.fetchData().then(() => {
+      this.setState({refreshing: false});
+    });
+  }
+
+  fetchData = async () => {
 
   }
 
   _renderItem = ({ item }) => {
-    return <SubCardStory article={item} />;
+    return <SubCardStory article={item} onPressSubCard={() => {this.onPressSubCard()}} />;
   };
 
   _renderItemHead = ({ item }) => {
-    return <CardStory article={item} />;
+    return <CardStory article={item} onPressArticle={() => {this.readArticle()}} />;
   };
 
-  _onHomePress = () => {
-    
-  };
+  onPressSubCard = () => {
+    this.props.navigation.navigate('readmore');
+  }
+
+  readArticle = () => {
+    this.props.navigation.navigate('readmore');
+  }
 
   _onPressNoti = () => {
     this.setState({ notificationVisible: true });
@@ -134,9 +161,7 @@ export default class Home extends Component {
   render() {
     const { navigation } = this.props;
     return (
-      <View style={{ backgroundColor: "#F9F6F5" }}>
-        <MenuDrawer />
-
+      <View style={{ backgroundColor: "#F9F6F5" , marginTop:0 }}>
         <Modal style={{width:360, marginLeft:1}} isVisible={this.state.notificationVisible}>
           <Notification
             onPressClose={() => {
@@ -152,7 +177,14 @@ export default class Home extends Component {
           />
         </Modal>
 
-        <ScrollView style={{ flexDirection: "column" }}>
+        <ScrollView 
+           refreshControl={
+          <RefreshControl
+            refreshing={this.state.refreshing}
+            onRefresh={this._onRefresh}
+          />
+        }
+        style={{ flexDirection: "column" }}>
           <View style={{ marginBottom: 20 }}>
             <HeaderHome
               onPressNotification={() => {

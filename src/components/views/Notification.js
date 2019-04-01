@@ -18,13 +18,19 @@ export default class Notification extends Component {
          name : 'Book Formatting',
          status : 'followed you',
          date : '22 March',
-         source: require("@Images/story/corda2.png")
+         source: require("@Images/profile/chun.jpeg")
         },
         {
-          name : 'Book Formatting',
-          status : 'followed you',
+          name : 'Ake40',
+          status : 'clapped for Introducing to Corda#1',
+          date : '21 March',
+          source: require("@Images/profile/aek.jpeg")
+         },
+         {
+          name : 'Ake40',
+          status : 'lapped for Introducing to Corda#2',
           date : '22 March',
-          source: require("@Images/story/corda2.png")
+          source: require("@Images/profile/aek.jpeg")
          },
          {
           name : 'Book Formatting',
@@ -44,30 +50,7 @@ export default class Notification extends Component {
           date : '22 March',
           source: require("@Images/story/corda2.png")
          },
-         {
-          name : 'Book Formatting',
-          status : 'followed you',
-          date : '22 March',
-          source: require("@Images/story/corda2.png")
-         },
-         {
-          name : 'Book Formatting',
-          status : 'followed you',
-          date : '22 March',
-          source: require("@Images/story/corda2.png")
-         },
-         {
-          name : 'Book Formatting',
-          status : 'followed you',
-          date : '22 March',
-          source: require("@Images/story/corda2.png")
-         },
-         {
-          name : 'Book Formatting',
-          status : 'followed you',
-          date : '22 March',
-          source: require("@Images/story/corda2.png")
-         },
+        
       ]
     };
   }

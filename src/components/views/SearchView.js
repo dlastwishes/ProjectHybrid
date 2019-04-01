@@ -12,21 +12,52 @@ export default class SearchView extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      refreshing: false,
-      keywords: [
+        keywords: [
         {
          keyword : 'Blockchain'
         },
         {
+            keyword : 'Cryptocurrency'
+        },
+        {
+            keyword : 'Programming'
+        },
+        {
+            keyword : 'Java'
+        },
+        {
             keyword : 'Javascript'
+        },
+        {
+            keyword : 'Software Engineering'
+        },
+        {
+            keyword : 'Marketing'
+        },
+        {
+            keyword : 'Cybersecurity'
+        },
+        {
+            keyword : 'Business'
+        },
+        {
+            keyword : 'Transportation'
+        },
+        {
+            keyword : 'Startups'
+        },
+        {
+            keyword : 'Android dev'
+        },
+        {
+            keyword : 'Social Media'
         },
         {
             keyword : 'Internet'
         },
         {
-            keyword : 'Javascript'
+            keyword : 'Nature'
         },
-  
       ]
     };
   }
@@ -46,13 +77,12 @@ export default class SearchView extends Component {
       return Sticky_header_View;
   }
 
-
-
-
   render() {
 
     return (
-        <FlatList data={this.state.notifications} 
+        <FlatList 
+        style={{height:'100%'}}
+        data={this.state.keywords} 
         keyExtractor={this._keyExtractor}
         stickyHeaderIndices={[0]}
         ListHeaderComponent={this._renderHeader}

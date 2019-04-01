@@ -1,5 +1,5 @@
 import React, { Component } from "react";
-import { View, Image, Text } from "react-native";
+import { View, Image, Text , TouchableOpacity } from "react-native";
 
 export default class CardStory extends Component {
   static navigationOptions = {
@@ -40,7 +40,8 @@ export default class CardStory extends Component {
           marginBottom: 30,
         }}
       >
-        <View
+     
+      <View
           style={{
             alignSelf: "center",
             flex: 1,
@@ -50,12 +51,14 @@ export default class CardStory extends Component {
             marginRight: 10
           }}
         >
+         <TouchableOpacity onPress={this.props.onPressArticle}> 
           <Image
             style={{ width: 300, height: 150, marginTop: 10 }}
             source={source}
           />
-          <Text style={{ fontSize: 22 , fontWeight:'bold', marginTop: 10 }}> {title} </Text>
 
+          <Text style={{ fontSize: 22 , fontWeight:'bold', marginTop: 10 }}> {title} </Text>
+          </TouchableOpacity>
           <View style={{ marginTop: 10 }}>
             <Text style={{ textAlign: "left", fontSize: 15, color: "gray" }}>
               {" "}
@@ -68,6 +71,8 @@ export default class CardStory extends Component {
             </Text>
           </View>
         </View>
+     
+ 
       </View>
     );
   }

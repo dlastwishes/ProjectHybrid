@@ -1,14 +1,24 @@
-import Home from '@Views/Home'
+import React from 'react';
+import { StyleSheet, Text, View } from 'react-native';
+import Drawer from '@Navigations/MenuDrawer';
 
-import { createStackNavigator , createAppContainer } from 'react-navigation';
+export default class App extends React.Component {
+  static navigationOptions = {
+    headerMode: 'none'
+   };
 
-const App = createStackNavigator(
-  {
-    main : {screen : Home}
+  render() {
+    return (
+      <View style={styles.container}>
+        <Drawer/>
+      </View>
+    );
+  }
+}
+
+const styles = StyleSheet.create({
+  container: {
+    flex: 1,
+    backgroundColor: '#fff',
   },
-  {
-    initialRouteName: 'main',
-    }
-);
-
-export default createAppContainer(App);
+});

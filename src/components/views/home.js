@@ -10,7 +10,7 @@ import {
   StyleSheet,
   TouchableOpacity
 } from "react-native";
-import HeaderHome from "@Navigations/HomeHeader";
+import HeaderHome from "@Widgets/HomeHeader";
 import CardStory from "@Widgets/CardStory";
 import SubCardStory from "@Widgets/subStoryCard";
 import Modal from "react-native-modal";
